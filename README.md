@@ -27,13 +27,10 @@ To run this application on your machine, run the following commands on your linu
 
 ```
 # Clone this repository
-git clone https://github.com/SalazarLucas/CS50-Projects.git
+git clone https://github.com/SalazarLucas/network.git
 
 # Go into the project's directory
-cd CS50-Projects/
-
-# Change the current branch to mail
-git checkout network
+cd network/
 
 # Install the projects's dependencies
 pip install -r requirements.txt
