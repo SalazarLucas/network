@@ -1,4 +1,4 @@
-# [Network](https://networkprojectapp.herokuapp.com/)
+# Network
 Network is a Twitter-like social network where users can follow each other and share their posts.
 
 - **New Post**: Users who are signed in should be able to write a new text-based post by filling in text into a text area and then clicking a button to submit the post.
