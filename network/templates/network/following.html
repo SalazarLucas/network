@@ -1,0 +1,27 @@
+{% extends "network/layout.html" %}
+
+{% block title %}Following{% endblock %}
+
+{% block body %}
+    <h1>Following</h1>
+{% endblock %}
+
+{% block pagination %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled"><div class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</div></li>
+        
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

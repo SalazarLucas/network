@@ -1,0 +1,30 @@
+body {
+    position: relative;
+}
+
+.body {
+    left: 50%;
+    width: 50vw;
+    margin: 5px 0 5px 0;
+    min-width: 250px;
+    position: absolute;
+    transform: translate(-50%, 0);
+}
+
+.card {
+    border-radius: 30px;
+    margin: 10px 0 10px 0;
+}
+
+.like {
+    font-weight: bold;
+}
+
+.dislike {
+    color: red;
+    font-size: larger;
+}
+
+.dislike:hover {
+    color: red;
+} 

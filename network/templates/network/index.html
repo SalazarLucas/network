@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'new_post' %}" method="POST">
+                    <div class="mb-3">
+                        <label for="new-post-textarea" class="form-label">New Post</label>
+                        <textarea name="content" class="form-control" id="new-post-textarea" placeholder="What's Happening?" required maxlength="200" rows="3"></textarea>
+                    </div>
+                    <input class="btn btn-primary" value="Post" type="submit">
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <h1>All Posts</h1>
+{% endblock %}
+
+{% block pagination %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled"><div class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</div></li>
+        
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <link rel="shortcut icon" href="{% static 'network/favicon.png' %}" type="image/x-icon">
+        <script src="{% static 'network/app.js' %}"></script>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Network</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' user.username %}"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'following' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+            {% for post in page_obj %}
+                <div data-post_id="{{ post.id }}" class="card post-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'profile' post.writer %}">{{ post.writer.username }}</a></h5>
+                        {% if user.username == post.writer.username %}
+                            <div id="edit-view{{ post.id }}">
+                                <a href="#" id="edit-button-{{ post.id }}">Edit</a>
+                                <form id="edited-post-form-{{ post.id }}" style="display: none;">
+                                    <textarea class="form-control" id="new-post-content-{{ post.id }}" required maxlength="250" rows="3"></textarea>
+                                    <input type="submit" class="btn btn-primary" value="Save">
+                                </form>
+                            </div>
+                        {% endif %}
+                        <p id="post{{ post.id }}" class="card-text">{{ post.content }}</p>
+                        <p class="card-text"><small class="text-muted">{{ post.timestamp }}</small></p>
+                        
+                        {% if post in user.likes.all %}
+                            <a id="like-button-{{ post.id }}" class="dislike" href="#">&#9829;</a>
+                        {% else %}
+                            <a id="like-button-{{ post.id }}" class="like" href="#">&#9825;</a>
+                        {% endif %}
+                        <span id="post-likes{{ post.id }}">{{post.likers.all|length}}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if page_obj.object_list %}
+                {% block pagination %}{% endblock %}
+            {% endif %}
+        </div>
+    </body>
+</html>
